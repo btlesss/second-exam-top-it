@@ -8,9 +8,21 @@ namespace stepanov
 
 int main(int argc, char* argv[])
 {
+  bool reverse = false;
+  if (argc > 2) {
+    std::cerr << "too many arguments\n";
+    return 1;
+  } else if (argc == 2) {
+    if (std::strcmp(argv[1], "reverse") == 0) {
+      reverse = true;
+    } else {
+      std::cerr << "invalid argument\n";
+      return 1;
+    }
+  }
+
   size_t size = 0;
   stepanov::repeatedChar* data = nullptr;
-  bool reverse = argc > 1 && std::strcmp(argv[1], "reverse") == 0;
   try {
     data = stepanov::readInput(std::cin, size);
   } catch (const std::bad_alloc& e) {
