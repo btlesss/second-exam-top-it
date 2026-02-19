@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 {
   size_t size = 0;
   stepanov::repeatedChar* data = nullptr;
-  bool reverse = argc > 1 && argv;
+  bool reverse = argc > 1 && std::strcmp(argv[1], "reverse") == 0;
   try {
     data = stepanov::readInput(std::cin, size);
   } catch (const std::bad_alloc& e) {
@@ -26,7 +26,9 @@ int main(int argc, char* argv[])
       std::cout << data[id].first << ' ' << data[id].second << '\n';
     }
   }
-  std::cout << '\n';
+  if (size == 0) {
+    std::cout << '\n';
+  }
   delete[] data;
   return 0;
 }
