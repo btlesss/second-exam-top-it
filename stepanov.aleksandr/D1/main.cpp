@@ -2,7 +2,7 @@
 
 namespace stepanov
 {
-  using repeatedChar = std::pair<char, size_t>;
+  using repeatedChar = std::pair<size_t, char>;
   repeatedChar readLine(std::istream& in, bool& success);
   repeatedChar* readInput(std::istream& in, size_t& size);
 }
@@ -15,23 +15,18 @@ int main()
     data = stepanov::readInput(std::cin, size);
   } catch (const std::bad_alloc& e) {
     std::cerr << "bad alloc\n";
-    return 1;
+    return 2;
   } catch (const std::runtime_error& e) {
     std::cerr << e.what() << '\n';
-    return 2;
+    return 1;
   }
   return 0;
 }
 
 stepanov::repeatedChar stepanov::readLine(std::istream& in, bool& success)
 {
-  repeatedChar line = { '\0', 0 };
-  in >> line.first;
-  if (in.fail()) {
-    success = false;
-    return line;
-  }
-  in >> line.second;
+  repeatedChar line = { 0, '\0' };
+  in >> line.first >> line.second;
   if (in.fail() && !in.eof()) {
     success = false;
     return line;
@@ -70,7 +65,7 @@ stepanov::repeatedChar* stepanov::readInput(std::istream& in, size_t& size)
 
   if (!success) {
     delete[] mem;
-    throw std::runtime_error("readInput: bad input");
+    throw std::runtime_error("bad input");
   }
   return mem;
 }
